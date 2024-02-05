@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Rota para obter todos os cursos (GET)
+//GET
 router.get('/curso', (req, res) => {
     const query = "SELECT * FROM Curso";
 
@@ -14,7 +14,7 @@ router.get('/curso', (req, res) => {
     });
 });
 
-// Rota para criar um novo curso (POST)
+//POST
 router.post('/curso', (req, res) => {
     const { nome } = req.body;
 
@@ -29,6 +29,41 @@ router.post('/curso', (req, res) => {
         } else {
             console.log("Curso criado com sucesso:", result);
             res.status(201).send('Curso criado com sucesso');
+        }
+    });
+});
+
+//PUT
+router.put('/curso/:id', (req, res) => {
+    const courseId = req.params.id;
+    const { nome } = req.body;
+
+    const query = `UPDATE Curso SET Nome='${nome}' WHERE ID=${courseId}`;
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao atualizar curso:", err);
+            res.status(500).send('Erro ao atualizar curso');
+        } else {
+            console.log("Curso atualizado com sucesso:", result);
+            res.status(200).send('Curso atualizado com sucesso');
+        }
+    });
+});
+
+// DELETE
+router.delete('/curso/:id', (req, res) => {
+    const courseId = req.params.id;
+
+    const query = `DELETE FROM Curso WHERE ID=${courseId}`;
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir curso:", err);
+            res.status(500).send('Erro ao excluir curso');
+        } else {
+            console.log("Curso excluído com sucesso:", result);
+            res.status(200).send('Curso excluído com sucesso');
         }
     });
 });
