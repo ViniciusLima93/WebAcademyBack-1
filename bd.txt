@@ -1,0 +1,84 @@
+CREATE DATABASE IF NOT EXISTS mapiguari;
+USE mapiguari;
+
+CREATE TABLE Usuario (
+    Id_Usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Login VARCHAR(255),
+    Senha VARCHAR(255)
+);
+
+CREATE TABLE Discente (
+    Matricula VARCHAR(255) PRIMARY KEY,
+    Nome VARCHAR(255),
+    fk_Usuario_Id_Usuario INTEGER
+);
+
+CREATE TABLE Docente (
+    Matricula VARCHAR(255) PRIMARY KEY,
+    Nome VARCHAR(255),
+    fk_Usuario_Id_Usuario INTEGER
+);
+
+CREATE TABLE Curso (
+    ID_Curso INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255)
+);
+
+CREATE TABLE Materia (
+    ID_Materia INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    CargaHoraria VARCHAR(255),
+    Ementa VARCHAR(255),
+    fk_Curso_ID_Curso INTEGER
+);
+
+CREATE TABLE Turma_disciplina (
+    fk_Docente_Matricula VARCHAR(255),
+    fk_Materia_ID_Materia INTEGER,
+    fk_Discente_Matricula VARCHAR(255)
+);
+
+CREATE TABLE Aula (
+    ID_Aula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Conteudo VARCHAR(255),
+    Data TIME
+);
+
+CREATE TABLE Presenca (
+    fk_Aula_ID_Aula INTEGER
+);
+ 
+ALTER TABLE Discente ADD CONSTRAINT FK_Discente_2
+    FOREIGN KEY (fk_Usuario_Id_Usuario)
+    REFERENCES Usuario (Id_Usuario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Docente ADD CONSTRAINT FK_Docente_2
+    FOREIGN KEY (fk_Usuario_Id_Usuario)
+    REFERENCES Usuario (Id_Usuario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Materia ADD CONSTRAINT FK_Materia_2
+    FOREIGN KEY (fk_Curso_ID_Curso)
+    REFERENCES Curso (ID_Curso)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_1
+    FOREIGN KEY (fk_Docente_Matricula)
+    REFERENCES Docente (Matricula)
+    ON DELETE CASCADE;
+ 
+ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_2
+    FOREIGN KEY (fk_Materia_ID_Materia)
+    REFERENCES Materia (ID_Materia)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_3
+    FOREIGN KEY (fk_Discente_Matricula)
+    REFERENCES Discente (Matricula)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_1
+    FOREIGN KEY (fk_Aula_ID_Aula)
+    REFERENCES Aula (ID_Aula)
+    ON DELETE RESTRICT;
