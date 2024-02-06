@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS mapiguari;
-USE mapiguari;
+CREATE DATABASE IF NOT EXISTS mapinguari;
+USE mapinguari;
 
 CREATE TABLE Usuario (
     Id_Usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
