@@ -7,16 +7,11 @@ CREATE TABLE Usuario (
     Senha VARCHAR(255)
 );
 
-CREATE TABLE Discente (
-    Matricula VARCHAR(255) PRIMARY KEY,
-    Nome VARCHAR(255),
-    fk_Usuario_Id_Usuario INTEGER
-);
-
 CREATE TABLE Docente (
-    Matricula VARCHAR(255) PRIMARY KEY,
+    Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(255),
-    fk_Usuario_Id_Usuario INTEGER
+    fk_Usuario_Id_Usuario INTEGER,
+    FOREIGN KEY (fk_Usuario_Id_Usuario) REFERENCES Usuario(Id_Usuario) ON DELETE RESTRICT
 );
 
 CREATE TABLE Curso (
@@ -29,56 +24,50 @@ CREATE TABLE Materia (
     Nome VARCHAR(255),
     CargaHoraria VARCHAR(255),
     Ementa VARCHAR(255),
-    fk_Curso_ID_Curso INTEGER
+    fk_Curso_ID_Curso INTEGER,
+    FOREIGN KEY (fk_Curso_ID_Curso) REFERENCES Curso(ID_Curso) ON DELETE RESTRICT
 );
 
-CREATE TABLE Turma_disciplina (
-    fk_Docente_Matricula VARCHAR(255),
-    fk_Materia_ID_Materia INTEGER,
-    fk_Discente_Matricula VARCHAR(255)
+CREATE TABLE Turma (
+    ID_Turma INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    ID_Materia INTEGER,
+    fk_Docente_Matricula INTEGER,
+    FOREIGN KEY (ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE,
+    FOREIGN KEY (fk_Docente_Matricula) REFERENCES Docente(Matricula) ON DELETE SET NULL,
+    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, fk_Docente_Matricula)
 );
+
+CREATE TABLE Discente (
+    Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    fk_Usuario_Id_Usuario INTEGER,
+    FOREIGN KEY (fk_Usuario_Id_Usuario) REFERENCES Usuario(Id_Usuario) ON DELETE RESTRICT
+);
+
+CREATE TABLE Turma_Discente (
+    ID_Turma INTEGER,
+    Matricula_Discente INTEGER,
+    PRIMARY KEY (ID_Turma, Matricula_Discente),
+    FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
+    FOREIGN KEY (Matricula_Discente) REFERENCES Discente(Matricula) ON DELETE CASCADE
+);
+
+
 
 CREATE TABLE Aula (
     ID_Aula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_Turma INTEGER,
     Conteudo VARCHAR(255),
-    Data TIME
+    Data TIME,
+    FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE
 );
 
 CREATE TABLE Presenca (
-    fk_Aula_ID_Aula INTEGER
+    ID_Aula INTEGER,
+    Matricula_Discente INTEGER,
+    Presenca_Char CHAR(1),
+    PRIMARY KEY (ID_Aula, Matricula_Discente),
+    FOREIGN KEY (ID_Aula) REFERENCES Aula(ID_Aula) ON DELETE CASCADE,
+    FOREIGN KEY (Matricula_Discente) REFERENCES Discente(Matricula) ON DELETE CASCADE
 );
- 
-ALTER TABLE Discente ADD CONSTRAINT FK_Discente_2
-    FOREIGN KEY (fk_Usuario_Id_Usuario)
-    REFERENCES Usuario (Id_Usuario)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Docente ADD CONSTRAINT FK_Docente_2
-    FOREIGN KEY (fk_Usuario_Id_Usuario)
-    REFERENCES Usuario (Id_Usuario)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Materia ADD CONSTRAINT FK_Materia_2
-    FOREIGN KEY (fk_Curso_ID_Curso)
-    REFERENCES Curso (ID_Curso)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_1
-    FOREIGN KEY (fk_Docente_Matricula)
-    REFERENCES Docente (Matricula)
-    ON DELETE CASCADE;
- 
-ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_2
-    FOREIGN KEY (fk_Materia_ID_Materia)
-    REFERENCES Materia (ID_Materia)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Turma_disciplina ADD CONSTRAINT FK_Turma_disciplina_3
-    FOREIGN KEY (fk_Discente_Matricula)
-    REFERENCES Discente (Matricula)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Presenca ADD CONSTRAINT FK_Presenca_1
-    FOREIGN KEY (fk_Aula_ID_Aula)
-    REFERENCES Aula (ID_Aula)
-    ON DELETE RESTRICT;
