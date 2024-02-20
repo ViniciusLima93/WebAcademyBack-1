@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// Create (Criar)
+router.get('/materia/:idMateria', (req, res) => {
+    const idMateria = req.params.idMateria;
+    const query = 'SELECT Matricula_Discente FROM Turma_Discente WHERE ID_Turma IN (SELECT ID_Turma FROM Turma WHERE ID_Materia = ?)';
+
+    db.query(query, [idMateria], (err, result) => {
+        if (err) {
+            res.status(500).send("Erro ao obter discentes matriculados na matéria");
+        } else {
+            res.json(result);
+        }
+    });
+});
+
 router.post('/', (req, res) => {
     const { ID_Turma, Matricula_Discente } = req.body;
 

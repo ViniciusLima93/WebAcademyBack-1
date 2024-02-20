@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// CREATE (Criar)
+
 router.post('/', (req, res) => {
     const { Nome, fk_Usuario_Id_Usuario } = req.body;
 
@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// READ (Ler)
+
 router.get('/', (req, res) => {
     const query = "SELECT * FROM Discente";
 
@@ -33,7 +33,6 @@ router.get('/', (req, res) => {
     });
 });
 
-// UPDATE (Atualizar)
 router.put('/:matricula', (req, res) => {
     const matricula = req.params.matricula;
     const { Nome, fk_Usuario_Id_Usuario } = req.body;
@@ -51,7 +50,7 @@ router.put('/:matricula', (req, res) => {
     });
 });
 
-// DELETE (Apagar)
+
 router.delete('/:matricula', (req, res) => {
     const matricula = req.params.matricula;
 
@@ -68,4 +67,22 @@ router.delete('/:matricula', (req, res) => {
     });
 });
 
+router.get('/:matricula', (req, res) => {
+    const matricula = req.params.matricula;
+
+    const query = `SELECT Nome FROM Discente WHERE Matricula=${matricula}`;
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao obter discente:", err);
+            res.status(500).send("Erro ao obter discente");
+        } else {
+            if (result.length > 0) {
+                res.json(result[0].Nome);
+            } else {
+                res.status(404).send("Discente não encontrado");
+            }
+        }
+    });
+});
 module.exports = router;
