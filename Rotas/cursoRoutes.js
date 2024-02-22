@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-
 router.get('/', (req, res) => {
     const query = "SELECT * FROM Curso";
 
@@ -16,9 +15,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    const courseId = req.params.id;
+    const cursoId = req.params.id;
 
-    const query = `SELECT * FROM Curso WHERE ID=${courseId}`;
+    const query = `SELECT * FROM Curso WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
 
     db.query(query, (err, result) => {
         if (err) {
@@ -52,12 +51,11 @@ router.post('/', (req, res) => {
     });
 });
 
-
 router.put('/:id', (req, res) => {
-    const courseId = req.params.id;
+    const cursoId = req.params.id;
     const { nome } = req.body;
 
-    const query = `UPDATE Curso SET Nome='${nome}' WHERE ID_Curso=${courseId}`;
+    const query = `UPDATE Curso SET Nome='${nome}' WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
 
     db.query(query, (err, result) => {
         if (err) {
@@ -70,11 +68,10 @@ router.put('/:id', (req, res) => {
     });
 });
 
-
 router.delete('/:id', (req, res) => {
-    const courseId = req.params.id;
+    const cursoId = req.params.id;
 
-    const query = `DELETE FROM Curso WHERE ID_Curso=${courseId}`;
+    const query = `DELETE FROM Curso WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
 
     db.query(query, (err, result) => {
         if (err) {
