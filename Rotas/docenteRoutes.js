@@ -19,7 +19,26 @@ router.post('/', (req, res) => {
     });
 });
 
-// READ (Ler)
+// GET por ID
+router.get('/:matricula', (req, res) => {
+    const matricula = req.params.matricula;
+
+    const query = `SELECT * FROM Docente WHERE Matricula = ${matricula}`;
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao obter docente por ID:", err);
+            res.status(500).send("Erro ao obter docente por ID");
+        } else {
+            if (result.length === 0) {
+                res.status(404).send("Docente não encontrado");
+            } else {
+                res.json(result[0]);
+            }
+        }
+    });
+});
+
 router.get('/', (req, res) => {
     const query = "SELECT * FROM Docente";
 
@@ -51,9 +70,8 @@ router.put('/:matricula', (req, res) => {
     });
 });
 
-// DELETE (Apagar)
 router.delete('/:matricula', (req, res) => {
-    const matricula = req.params.matricula;
+    const matricula = parseInt(req.params.matricula);
 
     const query = `DELETE FROM Docente WHERE Matricula=${matricula}`;
 
@@ -67,5 +85,6 @@ router.delete('/:matricula', (req, res) => {
         }
     });
 });
+
 
 module.exports = router;

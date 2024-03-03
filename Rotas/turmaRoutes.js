@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
-// CREATE (Criar)
+
 router.post('/', (req, res) => {
     const { Nome, ID_Materia, fk_Docente_Matricula } = req.body;
 
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// READ (Ler)
+
 router.get('/', (req, res) => {
     const query = "SELECT * FROM Turma";
 
@@ -34,7 +34,27 @@ router.get('/', (req, res) => {
     });
 });
 
-// UPDATE (Atualizar)
+
+router.get('/:id', (req, res) => {
+    const turmaId = req.params.id;
+
+    const query = "SELECT * FROM Turma WHERE ID_Turma = ?";
+    const values = [turmaId];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error("Erro ao obter turma por ID:", err);
+            res.status(500).send("Erro ao obter turma por ID");
+        } else {
+            if (result.length === 0) {
+                res.status(404).send("Turma não encontrada");
+            } else {
+                res.json(result[0]);
+            }
+        }
+    });
+});
+
 router.put('/:id', (req, res) => {
     const turmaId = req.params.id;
     const { Nome, ID_Materia, fk_Docente_Matricula } = req.body;
@@ -53,7 +73,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// DELETE (Apagar)
+
 router.delete('/:id', (req, res) => {
     const turmaId = req.params.id;
 

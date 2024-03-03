@@ -32,10 +32,10 @@ CREATE TABLE Turma (
     ID_Turma INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(255),
     ID_Materia INTEGER,
-    fk_Docente_Matricula INTEGER,
+    Matricula_Docente INTEGER,
     FOREIGN KEY (ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE,
-    FOREIGN KEY (fk_Docente_Matricula) REFERENCES Docente(Matricula) ON DELETE SET NULL,
-    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, fk_Docente_Matricula)
+    FOREIGN KEY (Matricula_Docente) REFERENCES Docente(Matricula) ON DELETE SET NULL,
+    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, Matricula_Docente)
 );
 
 CREATE TABLE Discente (
@@ -52,8 +52,6 @@ CREATE TABLE Turma_Discente (
     FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
     FOREIGN KEY (Matricula_Discente) REFERENCES Discente(Matricula) ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE Aula (
     ID_Aula INTEGER PRIMARY KEY AUTO_INCREMENT,

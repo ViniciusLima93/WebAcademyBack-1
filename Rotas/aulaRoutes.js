@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db');
 
 // CREATE - Adicionar uma nova aula
-router.post('/aula', (req, res) => {
+router.post('/', (req, res) => {
     const { conteudo, data } = req.body;
 
     const query = `INSERT INTO Aula (Conteudo, Data) VALUES (?, ?)`;
@@ -21,7 +21,7 @@ router.post('/aula', (req, res) => {
 });
 
 // READ - Obter todas as aulas
-router.get('/aula', (req, res) => {
+router.get('/', (req, res) => {
     const query = "SELECT * FROM Aula";
 
     db.query(query, (err, result) => {
@@ -34,8 +34,20 @@ router.get('/aula', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+    const query = "SELECT * FROM Aula";
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao obter aulas:", err);
+            res.status(500).send('Erro ao obter aulas');
+        } else {
+            res.json(result);
+        }
+    });
+});
 // UPDATE - Atualizar uma aula
-router.put('/aula/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const aulaId = req.params.id;
     const { conteudo, data } = req.body;
 
@@ -54,7 +66,7 @@ router.put('/aula/:id', (req, res) => {
 });
 
 // DELETE - Excluir uma aula
-router.delete('/aula/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const aulaId = req.params.id;
 
     const query = `DELETE FROM Aula WHERE ID_Aula=?`;
