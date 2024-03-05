@@ -6,10 +6,10 @@ const db = require('../db');
 router.post('/', (req, res) => {
     const { conteudo, data } = req.body;
 
-    const query = `INSERT INTO Aula (Conteudo, Data) VALUES (?, ?)`;
-    const values = [conteudo, data];
+    const query = `INSERT INTO Aula (Conteudo, Data) VALUES ('${conteudo}', '${data}')`;
+    //const values = [conteudo, data];
 
-    db.query(query, values, (err, result) => {
+    db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao adicionar aula:", err);
             res.status(500).send('Erro ao adicionar aula');
