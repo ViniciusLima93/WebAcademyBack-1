@@ -34,9 +34,9 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const { nome } = req.body;
+    const { nome, vagas } = req.body;
 
-    const query = `INSERT INTO Curso (Nome) VALUES ('${nome}')`;
+    const query = `INSERT INTO Curso (Nome, Vagas) VALUES ('${nome}', '${vagas}')`;
 
     console.log("Query:", query);
 
