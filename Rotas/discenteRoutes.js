@@ -70,7 +70,7 @@ router.delete('/:matricula', (req, res) => {
 router.get('/:matricula', (req, res) => {
     const matricula = req.params.matricula;
 
-    const query = `SELECT Nome FROM Discente WHERE Matricula=${matricula}`;
+    const query = `SELECT * FROM Discente WHERE Matricula=${matricula}`;
 
     db.query(query, (err, result) => {
         if (err) {
@@ -78,11 +78,12 @@ router.get('/:matricula', (req, res) => {
             res.status(500).send("Erro ao obter discente");
         } else {
             if (result.length > 0) {
-                res.json(result[0].Nome);
+                res.json(result[0]);
             } else {
                 res.status(404).send("Discente não encontrado");
             }
         }
     });
 });
+
 module.exports = router;
