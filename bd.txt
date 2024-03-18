@@ -17,9 +17,8 @@ CREATE TABLE Docente (
 CREATE TABLE Curso (
     ID_Curso INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(255),
-    Vagas INTEGER(2)
+    Vagas INTEGER
 );
-
 
 CREATE TABLE Materia (
     ID_Materia INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -31,20 +30,20 @@ CREATE TABLE Materia (
 );
 
 CREATE TABLE Turma (
-    ID_Turma INTEGER PRIMARY KEY AUTO_INCREMENT,Realiza
+    ID_Turma INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(255),
     ID_Materia INTEGER,
-    fk_Docente_Matricula INTEGER,
+    Matricula_Docente INTEGER,
     FOREIGN KEY (ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE,
-    FOREIGN KEY (fk_Docente_Matricula) REFERENCES Docente(Matricula) ON DELETE SET NULL,
-    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, fk_Docente_Matricula)
+    FOREIGN KEY (Matricula_Docente) REFERENCES Docente(Matricula) ON DELETE SET NULL,
+    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, Matricula_Docente)
 );
 
 CREATE TABLE Discente (
     Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(255),
-    fk_Usuario_Id_Usuario INTEGER,
-    FOREIGN KEY (fk_Usuario_Id_Usuario) REFERENCES Usuario(Id_Usuario) ON DELETE RESTRICT
+    Nascimento VARCHAR(255),
+    Email VARCHAR(255)
 );
 
 CREATE TABLE Turma_Discente (
@@ -54,8 +53,6 @@ CREATE TABLE Turma_Discente (
     FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
     FOREIGN KEY (Matricula_Discente) REFERENCES Discente(Matricula) ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE Aula (
     ID_Aula INTEGER PRIMARY KEY AUTO_INCREMENT,

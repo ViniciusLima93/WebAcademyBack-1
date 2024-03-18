@@ -18,9 +18,10 @@ router.get('/materia/:idMateria', (req, res) => {
 router.post('/', (req, res) => {
     const { ID_Turma, Matricula_Discente } = req.body;
 
-    const query = `INSERT INTO Turma_Discente (ID_Turma, Matricula_Discente) VALUES (${ID_Turma}, '${Matricula_Discente}')`;
+    const query = 'INSERT INTO Turma_Discente (ID_Turma, Matricula_Discente) VALUES (?, ?)';
+    const values = [ID_Turma, Matricula_Discente];
 
-    db.query(query, (err, result) => {
+    db.query(query, values, (err, result) => {
         if (err) {
             console.error("Erro ao adicionar discente à turma:", err);
             res.status(500).send('Erro ao adicionar discente à turma');
@@ -33,7 +34,12 @@ router.post('/', (req, res) => {
 
 // Read (Ler)
 router.get('/', (req, res) => {
-    const query = "SELECT * FROM Turma_Discente";
+    const query = `
+    SELECT Turma.Nome AS Nome_Turma, Discente.Nome AS Nome_Discente, Turma_Discente.Matricula_Discente AS ID_Matricula
+    FROM Turma
+    INNER JOIN Turma_Discente ON Turma.ID_Turma = Turma_Discente.ID_Turma
+    INNER JOIN Discente ON Turma_Discente.Matricula_Discente = Discente.Matricula;
+    `;
 
     db.query(query, (err, result) => {
         if (err) {

@@ -1,0 +1,90 @@
+CREATE DATABASE IF NOT EXISTS mapinguari2;
+USE mapinguari2;
+
+CREATE TABLE Usuario (
+    Id_Usuario INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Login VARCHAR(255),
+    Senha VARCHAR(255)
+);
+
+CREATE TABLE Docente (
+    Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    fk_Usuario_Id_Usuario INTEGER,
+    FOREIGN KEY (fk_Usuario_Id_Usuario) REFERENCES Usuario(Id_Usuario) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE Discente (
+    Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    Nascimento VARCHAR(255),
+    Email VARCHAR(255)
+);
+
+CREATE TABLE Curso (
+    ID_Curso INTEGER PRIMARY KEY AUTO_INCREMENT,
+    cursoNome VARCHAR(255),
+    cursoVagas INTEGER
+);
+
+
+CREATE TABLE Materia (
+    ID_Materia INTEGER PRIMARY KEY AUTO_INCREMENT,
+    materiaNome VARCHAR(255),
+    materiaCargaHoraria VARCHAR(255),
+    materiaEmenta VARCHAR(255),
+    fk_Curso_ID_Curso INTEGER,
+    FOREIGN KEY (fk_Curso_ID_Curso) REFERENCES Curso(ID_Curso) ON DELETE RESTRICT
+);
+
+CREATE TABLE Discente_Materia (
+    ID_Discente_Materia INTEGER PRIMARY KEY AUTO_INCREMENT,
+    fk_Discente_Matricula INTEGER,
+    Materia INTEGER,
+    FOREIGN KEY (fk_Discente_Matricula) REFERENCES Discente(Matricula) ON DELETE CASCADE,
+    FOREIGN KEY (fk_Materia_ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Curso_Materia (
+    ID_Curso_Materia INTEGER PRIMARY KEY AUTO_INCREMENT,
+    fk_Curso_ID_Curso INTEGER,
+    fk_Materia_ID_Materia INTEGER,
+    FOREIGN KEY (fk_Materia_ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE,
+    FOREIGN KEY (fk_Curso_ID_Curso) REFERENCES Curso(ID_Curso) ON DELETE CASCADE
+);
+
+CREATE TABLE Turma (
+    ID_Turma INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(255),
+    ID_Materia INTEGER,
+    fk_Docente_Matricula INTEGER,
+    FOREIGN KEY (ID_Materia) REFERENCES Materia(ID_Materia) ON DELETE CASCADE,
+    FOREIGN KEY (fk_Docente_Matricula) REFERENCES Docente(Matricula) ON DELETE SET NULL,
+    CONSTRAINT UC_Turma_Materia UNIQUE (ID_Materia, fk_Docente_Matricula)
+);
+
+
+CREATE TABLE Turma_Discente (
+    ID_Turma INTEGER,
+    Matricula_Discente INTEGER,
+    PRIMARY KEY (ID_Turma, Matricula_Discente),
+    FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
+    FOREIGN KEY (Matricula_Discente) REFERENCES Discente(Matricula) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Aula (
+    ID_Aula INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_Turma INTEGER,
+    Conteudo VARCHAR(255),
+    Data TIME,
+    FOREIGN KEY (ID_Turma) REFERENCES Turma(ID_Turma) ON DELETE CASCADE
+);
+
+CREATE TABLE Avaliacao (
+    ID_Avaliacao INTEGER PRIMARY KEY AUTO_INCREMENT,
+    ID_Discente_Materia INTEGER,
+    FOREIGN KEY (ID_Discente_Materia) REFERENCES Discente_Materia(ID_Discente_Materia) ON DELETE CASCADE
+);

@@ -4,10 +4,10 @@ const db = require('../db');
 
 // CREATE (Criar)
 router.post('/', (req, res) => {
-    const { Nome, ID_Materia, fk_Docente_Matricula } = req.body;
+    const { Nome, ID_Materia, Matricula_Docente } = req.body;
 
-    const query = `INSERT INTO Turma (Nome, ID_Materia, fk_Docente_Matricula) VALUES (?, ?, ?)`;
-    const values = [Nome, ID_Materia, fk_Docente_Matricula];
+    const query = `INSERT INTO Turma (Nome, ID_Materia, Matricula_Docente) VALUES (?, ?, ?)`;
+    const values = [Nome, ID_Materia, Matricula_Docente];
 
     db.query(query, values, (err, result) => {
         if (err) {
@@ -37,10 +37,10 @@ router.get('/', (req, res) => {
 // UPDATE (Atualizar)
 router.put('/:id', (req, res) => {
     const turmaId = req.params.id;
-    const { Nome, ID_Materia, fk_Docente_Matricula } = req.body;
+    const { Nome, ID_Materia, fMatricula_Docente } = req.body;
 
-    const query = `UPDATE Turma SET Nome=?, ID_Materia=?, fk_Docente_Matricula=? WHERE ID_Turma=?`;
-    const values = [Nome, ID_Materia, fk_Docente_Matricula, turmaId];
+    const query = `UPDATE Turma SET Nome=?, ID_Materia=?, Matricula_Docente=? WHERE ID_Turma=?`;
+    const values = [Nome, ID_Materia, Matricula_Docente, turmaId];
 
     db.query(query, values, (err, result) => {
         if (err) {

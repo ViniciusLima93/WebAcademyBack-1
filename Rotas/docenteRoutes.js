@@ -4,9 +4,9 @@ const db = require('../db');
 
 // CREATE (Criar)
 router.post('/', (req, res) => {
-    const { Nome, fk_Usuario_Id_Usuario } = req.body;
+    const { Nome} = req.body;
 
-    const query = `INSERT INTO Docente (Nome, fk_Usuario_Id_Usuario) VALUES ('${Nome}', ${fk_Usuario_Id_Usuario})`;
+    const query = `INSERT INTO Docente (Nome) VALUES ('${Nome}')`;
 
     db.query(query, (err, result) => {
         if (err) {
