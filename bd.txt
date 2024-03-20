@@ -9,9 +9,7 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Docente (
     Matricula INTEGER PRIMARY KEY AUTO_INCREMENT,
-    Nome VARCHAR(255),
-    fk_Usuario_Id_Usuario INTEGER,
-    FOREIGN KEY (fk_Usuario_Id_Usuario) REFERENCES Usuario(Id_Usuario) ON DELETE RESTRICT
+    Nome VARCHAR(255)
 );
 
 CREATE TABLE Curso (
