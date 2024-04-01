@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
             res.status(500).send('Erro ao criar curso');
         } else {
             console.log("Curso criado com sucesso:", result);
-            res.status(201).send('Curso criado com sucesso');
+            res.status(201).send({message: 'Curso criado com sucesso'});
         }
     });
 });
@@ -79,7 +79,7 @@ router.delete('/:id', (req, res) => {
             res.status(500).send('Erro ao excluir curso');
         } else {
             console.log("Curso excluído com sucesso:", result);
-            res.status(200).send('Curso excluído com sucesso');
+            res.status(200).send( {message: 'Curso excluído com sucesso'});
         }
     });
 });
