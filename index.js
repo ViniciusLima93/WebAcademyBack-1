@@ -2,11 +2,11 @@ const express = require('express');
 const db = require('./db');
 const cors = require('cors');
 
+
 const app = express();
 const port = 3000;
 
-// Remova a linha referente ao body-parser
-// app.use(bodyParser.json());
+
 
 app.use(cors());
 
@@ -26,3 +26,5 @@ app.use('/', routes);
 app.listen(port, () => {
     console.log(`Servidor rodando na porta: ${port}`);
 });
+
+
