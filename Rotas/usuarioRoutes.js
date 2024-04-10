@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken");
 const secretKey = 'secret';
 
 function verifyTokenInRoutes (req, res,next) {
-    const token = req.headers['x-acces-token'];
+    const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
+
     console.log('Receveid token:', token)
 
     if (!token) {
@@ -70,7 +71,7 @@ router.post('/', (req, res) => {
             
         if (result) {
             const userId = result.insertId;
-            const token  = jwt.sign({userId}, secretKey, {expiresIn: '1h'})
+            const token  = jwt.sign({userId}, secretKey)
             console.log("Usuário criado com sucesso:", result);
             return res.json({"message": "Usuário Criado com sucesso", token});
         } else {
