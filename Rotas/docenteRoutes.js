@@ -13,8 +13,7 @@ router.post('/', (req, res) => {
             console.error("Erro ao adicionar docente:", err);
             res.status(500).send('Erro ao adicionar docente');
         } else {
-            console.log("Docente adicionado com sucesso:", result);
-            res.status(201).send('Docente adicionado com sucesso');
+            res.status(201).send({message:'Docente adicionado com sucesso'});
         }
     });
 });

@@ -53,9 +53,9 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     const cursoId = req.params.id;
-    const { nome } = req.body;
+    const { nome, vagas } = req.body;
 
-    const query = `UPDATE Curso SET Nome='${nome}' WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
+    const query = `UPDATE Curso SET Nome='${nome}', Vagas = '${vagas}' WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
 
     db.query(query, (err, result) => {
         if (err) {
@@ -63,7 +63,7 @@ router.put('/:id', (req, res) => {
             res.status(500).send('Erro ao atualizar curso');
         } else {
             console.log("Curso atualizado com sucesso:", result);
-            res.status(200).send('Curso atualizado com sucesso');
+            res.status(200).send({message: 'Curso alterado com sucesso!'});
         }
     });
 });
