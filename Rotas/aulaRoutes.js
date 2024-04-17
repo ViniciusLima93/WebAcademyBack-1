@@ -34,6 +34,18 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+    const query = "SELECT * FROM Aula";
+
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error("Erro ao obter aulas:", err);
+            res.status(500).send('Erro ao obter aulas');
+        } else {
+            res.json(result);
+        }
+    });
+});
 // UPDATE - Atualizar uma aula
 router.put('/:id', (req, res) => {
     const aulaId = req.params.id;
