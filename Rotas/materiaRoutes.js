@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
             res.status(500).send('Erro ao criar matéria');
         } else {
             console.log("Matéria criada com sucesso:", result);
-            res.status(201).send('Matéria criada com sucesso');
+            res.status(201).send({message: 'Matéria criada com sucesso'});
         }
     });
 });
@@ -57,7 +57,7 @@ router.put('/:id', (req, res) => {
             res.status(500).send('Erro ao atualizar matéria');
         } else {
             console.log("Matéria atualizada com sucesso:", result);
-            res.status(200).send('Matéria atualizada com sucesso');
+            res.status(200).send({message: 'Matéria atualizada com sucesso'});
         }
     });
 });
@@ -74,7 +74,7 @@ router.delete('/:id', (req, res) => {
             res.status(500).send('Erro ao excluir matéria');
         } else {
             console.log("Matéria excluída com sucesso:", result);
-            res.status(200).send('Matéria excluída com sucesso');
+            res.status(200).send({message: 'Matéria excluída com sucesso'});
         }
     });
 });
