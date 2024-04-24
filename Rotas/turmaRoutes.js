@@ -60,7 +60,7 @@ router.put('/:id', (req, res) => {
     const { Nome, ID_Materia, fMatricula_Docente } = req.body;
 
     const query = `UPDATE Turma SET Nome=?, ID_Materia=?, Matricula_Docente=? WHERE ID_Turma=?`;
-    const values = [Nome, ID_Materia, Matricula_Docente, turmaId];
+    const values = [Nome, ID_Materia, fMatricula_Docente, turmaId];
 
     db.query(query, values, (err, result) => {
         if (err) {
