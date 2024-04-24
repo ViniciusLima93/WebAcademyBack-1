@@ -11,10 +11,10 @@ router.post('/', (req, res) => {
     db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao adicionar discente:", err);
-            res.status(500).send('Erro ao adicionar discente');
+            res.status(500).send({message: 'Erro ao adicionar discente'});
         } else {
             console.log("Discente adicionado com sucesso:", result);
-            res.status(201).send('Discente adicionado com sucesso');
+            res.status(201).send({message: 'Discente adicionado com sucesso'});
         }
     });
 });
@@ -42,10 +42,10 @@ router.put('/:matricula', (req, res) => {
     db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao atualizar discente:", err);
-            res.status(500).send('Erro ao atualizar discente');
+            res.status(500).send({message: 'Erro ao atualizar discente'});
         } else {
             console.log("Discente atualizado com sucesso:", result);
-            res.status(200).send('Discente atualizado com sucesso');
+            res.status(200).send({message: 'Discente atualizado com sucesso'});
         }
     });
 });
@@ -59,10 +59,10 @@ router.delete('/:matricula', (req, res) => {
     db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao excluir discente:", err);
-            res.status(500).send('Erro ao excluir discente');
+            res.status(500).send({message: 'Erro ao excluir discente'});
         } else {
             console.log("Discente excluído com sucesso:", result);
-            res.status(200).send('Discente excluído com sucesso');
+            res.status(200).send({message: 'Discente excluído com sucesso'});
         }
     });
 });
