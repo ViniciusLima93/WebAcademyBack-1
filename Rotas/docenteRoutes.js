@@ -80,7 +80,7 @@ router.delete('/:matricula', (req, res) => {
             res.status(500).send('Erro ao excluir docente');
         } else {
             console.log("Docente excluído com sucesso:", result);
-            res.status(200).send('Docente excluído com sucesso');
+            res.status(200).send({message: 'Docente excluído com sucesso'});
         }
     });
 });
