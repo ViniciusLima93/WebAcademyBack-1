@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
             res.status(500).send('Erro ao adicionar turma');
         } else {
             console.log("Turma adicionada com sucesso:", result);
-            res.status(201).send('Turma adicionada com sucesso');
+            res.status(201).send({message: 'Turma adicionada com sucesso'});
         }
     });
 });
@@ -68,7 +68,7 @@ router.put('/:id', (req, res) => {
             res.status(500).send('Erro ao atualizar turma');
         } else {
             console.log("Turma atualizada com sucesso:", result);
-            res.status(200).send('Turma atualizada com sucesso');
+            res.status(200).send({message: 'Turma atualizada com sucesso'});
         }
     });
 });
@@ -86,7 +86,7 @@ router.delete('/:id', (req, res) => {
             res.status(500).send('Erro ao excluir turma');
         } else {
             console.log("Turma excluída com sucesso:", result);
-            res.status(200).send('Turma excluída com sucesso');
+            res.status(200).send({message: 'Turma excluída com sucesso'});
         }
     });
 });

@@ -74,8 +74,7 @@ router.get('/:matricula', (req, res) => {
 
     db.query(query, (err, result) => {
         if (err) {
-            console.error("Erro ao obter discente:", err);
-            res.status(500).send("Erro ao obter discente");
+            res.status(500).send({message: "Erro ao obter discente"});
         } else {
             if (result.length > 0) {
                 res.json(result[0]);
