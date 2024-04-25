@@ -54,7 +54,7 @@ router.get('/:id', (req, res) => {
         }
     });
 });
-
+//gsgs
 router.put('/:id', (req, res) => {
     const turmaId = req.params.id;
     const { Nome, ID_Materia, fMatricula_Docente } = req.body;
