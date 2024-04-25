@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
     db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao adicionar discente:", err);
-            res.status(500).send({message: 'Erro ao adicionar discente'});
+            res.status(500).send( {message: 'Erro ao adicionar discente'} );
         } else {
             console.log("Discente adicionado com sucesso:", result);
             res.status(201).send({message: 'Discente adicionado com sucesso'});
@@ -62,7 +62,7 @@ router.delete('/:matricula', (req, res) => {
             res.status(500).send({message: 'Erro ao excluir discente'});
         } else {
             console.log("Discente excluído com sucesso:", result);
-            res.status(200).send({ message: 'Discente excluído com sucesso'});
+            res.status(200).send({message:'Discente excluído com sucesso'});
         }
     });
 });
